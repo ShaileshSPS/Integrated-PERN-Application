@@ -8,12 +8,12 @@ const TodoList = () => {
   //delete todo function
   const deleteTodo = async id => {
     try {
-      const deleteTodo = await fetch(`http://localhost:5000/dashboard/todos/${id}`, {
+        await fetch(`http://localhost:5000/dashboard/todos/${id}`, {
         method: "DELETE",
         headers: { jwt_token: localStorage.jwt_token }
       });
 
-      setTodos(todos.filter(todo => todo.id !== id));
+      // setTodos(todos.filter(todo => todo.id !== id));
     } catch (err) {
       console.error(err.message);
     }
@@ -35,7 +35,7 @@ const TodoList = () => {
 
   useEffect(() => {
     getTodos();
-  }, []);
+  }, [todos]);
 
   return (
     <Fragment>

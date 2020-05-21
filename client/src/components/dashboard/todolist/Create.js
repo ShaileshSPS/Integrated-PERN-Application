@@ -19,7 +19,8 @@ const TodoCreate = () => {
         body: JSON.stringify(body)
       });
       
-      window.location = "/dashboard";
+      setDescription("");
+      // window.location = "/dashboard";
     } catch (err) {
       console.error(err.message);
     }

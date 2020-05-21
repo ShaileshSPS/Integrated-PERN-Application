@@ -22,7 +22,7 @@ const TodoEdit = ({ todo }) => {
         }
       );
 
-      window.location = "/dashboard";
+      // window.location = "/dashboard";
     } catch (err) {
       console.error(err.message);
     }

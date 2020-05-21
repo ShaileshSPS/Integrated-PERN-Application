@@ -45,8 +45,8 @@ const Dashboard = ({ setAuth }) => {
           Logout
         </button>
       </div>
-      <TodoCreate />
-      <TodoList />
+      <TodoCreate  />
+      <TodoList  />
     </div>
   );
 };
