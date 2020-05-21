@@ -34,6 +34,7 @@ const TodoCreate = () => {
           type="text"
           className="form-control"
           value={description}
+          placeholder="Add Todo"
           onChange={e => setDescription(e.target.value)}
         />
         <button className="btn btn-success">Add</button>
