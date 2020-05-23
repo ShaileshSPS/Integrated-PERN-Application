@@ -1,6 +1,6 @@
 import React, { Fragment, useState } from "react";
 
-const TodoEdit = ({ todo }) => {
+const TodoEdit = ({ todo, setTodosChange }) => {
   const [description, setDescription] = useState(todo.description);
 
   //edit description function
@@ -13,7 +13,7 @@ const TodoEdit = ({ todo }) => {
       myHeaders.append("Content-Type", "application/json");
       myHeaders.append("jwt_token", localStorage.jwt_token);
 
-      const response = await fetch(
+      await fetch(
         `http://localhost:5000/dashboard/todos/${todo.id}`,
         {
           method: "PUT",
@@ -22,6 +22,7 @@ const TodoEdit = ({ todo }) => {
         }
       );
 
+      setTodosChange(true);
       // window.location = "/dashboard";
     } catch (err) {
       console.error(err.message);

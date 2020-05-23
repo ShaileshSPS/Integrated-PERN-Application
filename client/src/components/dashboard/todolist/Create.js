@@ -1,6 +1,7 @@
 import React, { Fragment, useState } from "react";
+import { toast } from "react-toastify";
 
-const TodoCreate = () => {
+const TodoCreate = ({setTodosChange}) => {
   const [description, setDescription] = useState("");
 
   const onSubmitForm = async e => {
@@ -19,6 +20,8 @@ const TodoCreate = () => {
         body: JSON.stringify(body)
       });
       
+      toast.error(await response.json());
+      setTodosChange(true);
       setDescription("");
       // window.location = "/dashboard";
     } catch (err) {

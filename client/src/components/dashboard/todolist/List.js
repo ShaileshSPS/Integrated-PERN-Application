@@ -2,7 +2,7 @@ import React, { Fragment, useEffect, useState } from "react";
 
 import TodoEdit from "./Edit";
 
-const TodoList = () => {
+const TodoList = ({allTodos, setTodosChange}) => {
   const [todos, setTodos] = useState([]);
 
   //delete todo function
@@ -13,29 +13,17 @@ const TodoList = () => {
         headers: { jwt_token: localStorage.jwt_token }
       });
 
+      // setTodosChange(true);
       // setTodos(todos.filter(todo => todo.id !== id));
-    } catch (err) {
-      console.error(err.message);
-    }
-  };
-
-  const getTodos = async () => {
-    try {
-      const response = await fetch("http://localhost:5000/dashboard/todos",{
-        method: "GET",
-        headers: { jwt_token: localStorage.jwt_token }
-      });
-      const jsonData = await response.json();
-
-      setTodos(jsonData);
+      window.location = "/dashboard";
     } catch (err) {
       console.error(err.message);
     }
   };
 
   useEffect(() => {
-    getTodos();
-  }, [todos]);
+    setTodos(allTodos);
+  }, [allTodos]);
 
   return (
     <Fragment>
@@ -58,7 +46,7 @@ const TodoList = () => {
             <tr key={todo.id}>
               <td>{todo.description}</td>
               <td>
-                <TodoEdit todo={todo} />
+                <TodoEdit todo={todo} setTodosChange={setTodosChange}/>
               </td>
               <td>
                 <button

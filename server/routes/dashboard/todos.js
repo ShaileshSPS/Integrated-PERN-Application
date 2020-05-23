@@ -17,11 +17,33 @@ router.get("/", authorize, async (req, res) => {
   }
 });
 
+//search todos list
+router.get("/search", authorize, async (req, res) => {
+  try {
+    const { description } = req.query;
+
+    const user = await pool.query(
+      "SELECT t.id, t.description FROM todos.todos  AS t LEFT JOIN users.users AS u ON u.id = t.user_id WHERE u.id = $1 AND t.description ILIKE $2 ORDER BY t.id",
+      [
+        req.user.id,
+        `%${description}%`
+      ]
+    );
+
+    res.json(user.rows);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server error");
+  }
+});
+
 //create a todo
 router.post("/", authorize, async (req, res) => {
   try {
-    console.log(req.body);
     const { description } = req.body;
+    if (description == '') {
+      return res.json("Description is empty");
+    } 
     const newTodo = await pool.query(
       "INSERT INTO todos.todos (user_id, description) VALUES ($1, $2) RETURNING *",
       [req.user.id, description]
@@ -38,6 +60,7 @@ router.put("/:id", authorize, async (req, res) => {
   try {
     const { id } = req.params;
     const { description } = req.body;
+    
     const updateTodo = await pool.query(
       "UPDATE todos.todos SET description = $1 WHERE id = $2 AND user_id = $3 RETURNING *",
       [description, id, req.user.id]
