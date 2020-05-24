@@ -5,7 +5,7 @@ Merged Login Register appication with the todo list application
 Commands:
 Server
 ->npm init -y
-->npm i express cors pg jsonwebtoken bcrypt dotenv
+->npm i express cors pg jsonwebtoken bcrypt dotenv nodemailer
 ->cd server 
 ->node server.js
 
