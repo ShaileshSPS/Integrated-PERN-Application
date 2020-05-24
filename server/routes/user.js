@@ -5,6 +5,7 @@ const pool = require("../db");
 const validate = require("../middleware/validations");
 const jwtGenerator = require("../utils/jwtGenerator");
 const authorize = require("../middleware/jwtAuthorization");
+const nodemailer = require("nodemailer");
 
 router.post("/register", validate, async (req, res) => {
   const { email, name, password } = req.body;
@@ -27,6 +28,24 @@ router.post("/register", validate, async (req, res) => {
     );
 
     const jwtToken = jwtGenerator(newUser.rows[0].id);
+
+    // Mail code commented for further reuse.
+    /*let transporter = nodemailer.createTransport({
+      host: "smtp.gmail.com",
+      port: 587,
+      secure: false, 
+      auth: {
+        user: ""+process.env.MAIL_FROM+"",
+        pass: ""+process.env.MAIL_PASS+"", 
+      },
+    });
+
+    await transporter.sendMail({
+      from: '"APP 👻" <'+process.env.MAIL_FROM+'>',
+      to: newUser.rows[0].email, 
+      subject: "Registered Successfully ✔", 
+      html: "Hello <b>"+newUser.rows[0].name+"</b> You successfully got Registered.",
+    }); */
 
     return res.json({ jwtToken });
   } catch (err) {
